@@ -6,7 +6,7 @@ interface thumbnail {
 }
 
 interface Character {
-    _id?: number;
+    _id?;
     descripcion: string,
     id: number,
     modified: Date,

@@ -1,9 +1,11 @@
 import { model, Schema } from "mongoose";
 
-const HeroeSchema: Schema = new Schema({
+const Collection: Schema = new Schema({
     date: {type:Date, default: Date.now()},
-    HeroeCollection:[{type: Schema.Types.ObjectId, ref: 'Heroe'}],
+    HeroeCollection:[{type: Schema.Types.ObjectId, ref: 'heroe'}],
+    offset:{type:Number},
+    total:{type:Number},
 })
 
-const heroe = model("Heroe", HeroeSchema);
-export default heroe
+const CharacterPetition = model("CharacterPetition", Collection);
+export default CharacterPetition

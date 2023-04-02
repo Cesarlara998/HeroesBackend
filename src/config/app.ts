@@ -2,7 +2,7 @@ import { Application } from 'express';
 import express from "express"
 import HeroesRoutes from "../routes/heroes.routes";
 import { color, log, red, green, cyan, cyanBright } from 'console-log-colors';
-
+var cors = require('cors')
 export default class app {
   public app: Application;
   public port: number;
@@ -11,6 +11,7 @@ export default class app {
     this.app = express();
     this.port = port;
     this.prefix = "/api";
+    this.app.use(cors());
     if (routers) this.initRouter(routers);
   }
 

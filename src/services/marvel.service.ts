@@ -1,13 +1,13 @@
 import axios from "axios";
 import { URL_MARVEL,PUBLIC_KEY,PRIVATE_KEY } from "../config/config";
-import Characters from "../interfaces/Characters.interface";
+import Characters from "../interfaces/characters.interface";
 const crypto = require('crypto');
 
 export default class MarvelService {
     constructor(){}
 
-    public async getCharacters():Promise<Characters> {
-        return (await axios(`${URL_MARVEL}/v1/public/characters?${this.GenerateHash()}`)).data.data
+    public async getCharacters(offset):Promise<Characters> {
+        return (await axios(`${URL_MARVEL}/v1/public/characters?${this.GenerateHash()}&offset=${offset}`)).data.data
     }
 
     private GenerateHash()  {

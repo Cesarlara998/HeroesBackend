@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-const HeroeSchema: Schema = new Schema({
+const Heroe: Schema = new Schema({
     thumbnail: {
         extension: {type: String},
         path: {type: String},
@@ -12,5 +12,5 @@ const HeroeSchema: Schema = new Schema({
     resourceUri:{type: String},
 })
 
-const heroe = model("Heroe", HeroeSchema);
-export default heroe
+const heroeSchema = model("heroe", Heroe);
+export default heroeSchema
