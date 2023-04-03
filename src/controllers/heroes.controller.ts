@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from "express";
-import MarvelService from "../../services/marvel.service";
-import HeroeDataSource from "../../datasource/heroe.datasource";
-import { Character } from "../../interfaces/characters.interface";
-import Petition from "../../schemas/MarvelService.schema";
-import Paginator from "../../interfaces/paginator.interface";
+import MarvelService from "../services/marvel.service";
+import HeroeDataSource from "../datasource/heroe.datasource";
+import { Character } from "../interfaces/characters.interface";
+import Petition from "../schemas/MarvelService.schema";
+import Paginator from "../interfaces/paginator.interface";
 
 interface ContextPaginator extends Paginator {
     data: Character[];
 }
 
-export default class HeroesController {
+export default class TeamsController {
     private readonly marvelService: MarvelService;
     private readonly heroeDataSource: HeroeDataSource;
     constructor() {
@@ -23,7 +23,7 @@ export default class HeroesController {
             const search = request.query.busqueda;
             const heroesCollection: Character[] = [];
             if (search) {
-                const data = await this.marvelService.SearchCharacters(search,actualPage * 20);
+                const data = await this.marvelService.SearchCharacters(search, actualPage * 20);
                 for (let character of data.results) {
                     heroesCollection.push(await this.heroeDataSource.CreateOrUpdate(character))
                 }
@@ -44,7 +44,6 @@ export default class HeroesController {
 
             return response.json(paginator)
         } catch (error) {
-            console.log(error);
 
             return response.status(500).send('Error');
 

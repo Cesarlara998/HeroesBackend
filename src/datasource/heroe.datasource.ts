@@ -1,5 +1,5 @@
 import { Character } from "../interfaces/characters.interface";
-import HeroeDB from "../interfaces/heroeDB.interface";
+import {HeroeDB} from "../interfaces/DB.interface";
 import CharacterPetition from "../schemas/MarvelService.schema";
 import heroeSchema from "../schemas/heroe.schema";
 

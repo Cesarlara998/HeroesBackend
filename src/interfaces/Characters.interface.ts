@@ -1,4 +1,4 @@
-import MarvelBase from "./MarvelBase.interface";
+import MarvelBase from "./marvelBase.interface";
 
 interface thumbnail {
     extension: string

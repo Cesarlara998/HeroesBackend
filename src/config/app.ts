@@ -2,6 +2,7 @@ import { Application } from 'express';
 import express from "express"
 import HeroesRoutes from "../routes/heroes.routes";
 import { color, log, red, green, cyan, cyanBright } from 'console-log-colors';
+import * as bodyParser from "body-parser";
 var cors = require('cors')
 export default class app {
   public app: Application;
@@ -11,10 +12,14 @@ export default class app {
     this.app = express();
     this.port = port;
     this.prefix = "/api";
-    this.app.use(cors());
+    this.initHelpers();
     if (routers) this.initRouter(routers);
   }
-
+  private initHelpers() {
+    
+    this.app.use(cors());
+    this.app.use(bodyParser.json());
+  }
   private initRouter(routers: any[]) {
 
     routers.forEach((route) => {
