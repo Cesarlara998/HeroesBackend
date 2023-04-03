@@ -8,7 +8,6 @@ export default class HeroesRoutes {
     constructor() {
         
         this.router.get(`${this.path}`,this.controller.get);
-        this.router.get(`${this.path}/test`,this.controller.get)
 
     }
 }

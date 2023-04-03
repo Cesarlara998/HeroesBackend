@@ -7,7 +7,13 @@ export default class MarvelService {
     constructor(){}
 
     public async getCharacters(offset):Promise<Characters> {
+        offset = offset-20;
         return (await axios(`${URL_MARVEL}/v1/public/characters?${this.GenerateHash()}&offset=${offset}`)).data.data
+    }
+
+    public async SearchCharacters(search,offset):Promise<Characters> {
+        offset = offset -20;        
+        return (await axios(`${URL_MARVEL}/v1/public/characters?${this.GenerateHash()}&nameStartsWith=${search}&offset=${offset}`)).data.data
     }
 
     private GenerateHash()  {

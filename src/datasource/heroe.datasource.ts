@@ -35,12 +35,11 @@ export default class HeroeDataSource implements HeroeDB {
         
 
     }
-    async CollectionCreate(heroe: Character[],total,contador) {
+    async CollectionCreate(heroe: Character[],action) {
         try {
             const petition = new CharacterPetition({
                 HeroeCollection: heroe,
-                offset: contador,
-                total: total
+                action: action
             }).save();
         } catch (error) {
             throw error
