@@ -9,7 +9,7 @@ interface ContextPaginator extends Paginator {
     data: Character[];
 }
 
-export default class TeamsController {
+export default class HeroesController {
     private readonly marvelService: MarvelService;
     private readonly heroeDataSource: HeroeDataSource;
     constructor() {

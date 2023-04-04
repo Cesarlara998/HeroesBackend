@@ -5,8 +5,13 @@ const Team: Schema = new Schema({
     name: {type: String,required:true},
     description : {type: String,required:true},
     ip_owner: {type:String,required:true},
-    heroes:[{type: Schema.Types.ObjectId, ref: 'heroe'}],
+    characters:[{type: Schema.Types.ObjectId, ref: 'heroe'}],
 })
-
+Team.methods.toJSON = function(){
+    const toobject = this.toObject();
+    delete toobject.ip_owner
+    return toobject;
+    
+};
 const TeamSchema = model("Team", Team);
 export default TeamSchema

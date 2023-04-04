@@ -7,4 +7,4 @@ const Collection: Schema = new Schema({
 })
 
 const CharacterPetition = model("CharacterPetition", Collection);
-export default CharacterPetition
+export default CharacterPetition;
