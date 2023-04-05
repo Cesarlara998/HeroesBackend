@@ -9,6 +9,8 @@ export default class TeamsRoutes {
         this.router.post(`${this.path}`,this.controller.post);
         this.router.put(`${this.path}`,this.controller.put);
         this.router.delete(`${this.path}`,this.controller.delete);
+        this.router.patch(`${this.path}`,this.controller.patch);
+        
 
     }
 }

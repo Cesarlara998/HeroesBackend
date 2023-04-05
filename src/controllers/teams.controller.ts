@@ -47,7 +47,6 @@ export default class TeamController {
     public put = async (request: Request, response: Response, next: NextFunction): Promise<Response<ContextPaginator> | Response<any, Record<string, any>>> => {
         try {            
             const heroe = await this.heroeDatasource.CreateOrUpdate(request.body.character);
-            console.log(heroe._id);
             
             // const team: team = {description: request.body.description,name:request.body.name,ip_owner:request.socket.remoteAddress,};
             const teamDB = await this.teamDataSource.PutHero(request.body.team,request.socket.remoteAddress,heroe._id);
@@ -62,7 +61,7 @@ export default class TeamController {
     }
 
     public delete = async (request: Request, response: Response, next: NextFunction): Promise<Response<ContextPaginator> | Response<any, Record<string, any>>> => {
-        try {            
+        try {
             const idTeam = String(request.query.team)
             if (!idTeam) {
                 return response.status(500).send('Team is required');
@@ -76,5 +75,27 @@ export default class TeamController {
 1
         }
     }
-
+    public patch = async (request: Request, response: Response, next: NextFunction): Promise<Response<ContextPaginator> | Response<any, Record<string, any>>> => {
+        try {
+            const part = String(request.query.part)
+            if (!part) {
+                return response.status(500).send('part is required');
+            }
+            let ds;
+             if (part === "team") ds = await this.teamDataSource.UpdateTeam(request.body,request.socket.remoteAddress);
+             if (part === "member"){ 
+                const heroe = await this.heroeDatasource.CreateOrUpdate(request.body.member);                
+                if (!heroe._id) return response.status(500).send('Heroe no encontrado');
+                ds = await this.teamDataSource.deleteHero(request.body.team,request.socket.remoteAddress,heroe._id);
+            }
+             
+            return response.send(ds);
+        } catch (error) {
+           console.log(error);
+            
+            
+            return response.status(500).send('Error');
+1
+        }
+    }
 }

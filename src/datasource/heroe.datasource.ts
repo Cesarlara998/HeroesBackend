@@ -6,7 +6,7 @@ import heroeSchema from "../schemas/heroe.schema";
 export default class HeroeDataSource implements HeroeDB {
     constructor() { }
 
-    async CreateOrUpdate(heroe: Character): Promise<Character> {
+    async CreateOrUpdate(heroe: Character): Promise<any> {
         try {
             const Search = await heroeSchema.findOne({ id: heroe.id });
 
@@ -19,15 +19,13 @@ export default class HeroeDataSource implements HeroeDB {
                 Search.thumbnail.extension = heroe.thumbnail.extension;
                 Search.thumbnail.path = heroe.thumbnail.path;
                 await Search.save();
-                Search.toObject()._id
-                heroe._id = Search.toObject()._id;
-                return heroe;
+                return Search;
             }
-            heroe._id = Search.toObject()._id;
-            return heroe;
+            
+            return Search;
         }
         const added = await heroeSchema.create({...heroe});
-        heroe._id = added.toObject()._id;
+        
         return heroe
         } catch (error) {
             throw error

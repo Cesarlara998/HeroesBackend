@@ -7,9 +7,40 @@ import TeamSchema from "../schemas/team.schema"; "../schemas/team.schema";
 
 export default class TeamsDataSource implements TeamDB {
     constructor() { }
-    async GetMyTeams(ip_owner:string): Promise<any[]> {
+    async deleteHero(teamId: string, ip_owner: string, CharacterId: string): Promise<{ status: boolean; message: string; }> {
         try {
-          return await TeamSchema.find({ ip_owner: ip_owner }).populate("characters");
+            
+            const resp = await TeamSchema.updateOne({ ip_owner: ip_owner, _id: teamId },
+                { $pullAll: 
+                    {characters: [
+                        { _id:CharacterId}
+                    ]} },
+                    {new:true})
+                console.log(resp);
+                
+            return { status: true, message: 'Registro eliminado' }
+
+        } catch (error) {
+            throw error
+        }
+    }
+
+
+
+    async UpdateTeam(team: team, ip_owner: string): Promise<{ status: boolean; message: string; }> {
+        try {
+            const resp = await TeamSchema.findOneAndUpdate({ ip_owner: ip_owner, _id: team._id }, { $set: team })
+            console.log(resp);
+
+            return { status: true, message: 'ok' }
+
+        } catch (error) {
+            throw error
+        }
+    }
+    async GetMyTeams(ip_owner: string): Promise<any[]> {
+        try {
+            return await TeamSchema.find({ ip_owner: ip_owner }).populate("characters");
         } catch (error) {
             throw error
         }
@@ -28,7 +59,7 @@ export default class TeamsDataSource implements TeamDB {
 
     async PutHero(teamId: string, ip_owner: string, characterId: string) {
         try {
-            const Search = await TeamSchema.findOne({ ip_owner: ip_owner,_id:teamId });
+            const Search = await TeamSchema.findOne({ ip_owner: ip_owner, _id: teamId });
             Search.characters.push(characterId);
             Search.save()
             return Search.populate("characters");
@@ -37,12 +68,13 @@ export default class TeamsDataSource implements TeamDB {
         }
     }
 
-    async DeleteTeam(id_team: string,ip_owner:string): Promise<{ status: boolean; message: string; }> {
+    async DeleteTeam(id_team: string, ip_owner: string): Promise<{ status: boolean; message: string; }> {
         try {
-            const deleteTeam = await TeamSchema.deleteOne({ ip_owner: ip_owner,_id:id_team });
-            return {status:true,message: 'ok'}
+            const deleteTeam = await TeamSchema.deleteOne({ ip_owner: ip_owner, _id: id_team });
+            return { status: true, message: 'ok' }
         } catch (error) {
             throw error
         }
     }
+
 }
