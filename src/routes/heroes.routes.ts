@@ -1,6 +1,5 @@
 import express from "express";
 import HeroesController from "../controllers/heroes.controller";
-import { log } from "console-log-colors";
 export default class HeroesRoutes {
     public path = "/heroes"
     public router = express.Router();

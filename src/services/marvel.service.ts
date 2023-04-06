@@ -5,6 +5,9 @@ const crypto = require('crypto');
 
 export default class MarvelService {
     constructor(){}
+    public async findCharacter(id:number): Promise<Characters> {
+        return (await axios(`${URL_MARVEL}/v1/public/characters/${id}?${this.GenerateHash()}`)).data.data
+    }
 
     public async getCharacters(offset):Promise<Characters> {
         offset = offset-20;

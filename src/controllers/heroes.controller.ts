@@ -21,6 +21,7 @@ export default class HeroesController {
         try {
             const actualPage = Number(request.query.page) || 0
             const search = request.query.busqueda;
+            const idSearch = request.query.id
             const heroesCollection: Character[] = [];
             if (search) {
                 const data = await this.marvelService.SearchCharacters(search, actualPage * 20);
@@ -33,7 +34,10 @@ export default class HeroesController {
                 return response.json(paginator)
             }
 
-
+            if (idSearch) {
+                const data = await this.marvelService.findCharacter(Number(idSearch))
+                return response.json(data.results[0])
+            }
 
             const data = await this.marvelService.getCharacters(actualPage * 20);
             for (let character of data.results) {
@@ -44,7 +48,12 @@ export default class HeroesController {
 
             return response.json(paginator)
         } catch (error) {
+            if (request.query.id && error.response?.data?.code === 404) {
+                return response.status(500).send("Heroe no encontrado");
 
+                
+            }
+            
             return response.status(500).send('Error');
 
         }

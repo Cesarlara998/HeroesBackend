@@ -2,8 +2,8 @@ import { Character } from "../interfaces/characters.interface";
 import { TeamDB } from "../interfaces/DB.interface";
 import team from "../interfaces/team.interface";
 import CharacterPetition from "../schemas/MarvelService.schema";
-import heroeSchema from "../schemas/heroe.schema";
-import TeamSchema from "../schemas/team.schema"; "../schemas/team.schema";
+import heroeSchema from "../schemas/Heroe.schema";
+import TeamSchema from "../schemas/Team.schema"; "../schemas/team.schema";
 
 export default class TeamsDataSource implements TeamDB {
     constructor() { }
@@ -24,9 +24,6 @@ export default class TeamsDataSource implements TeamDB {
             throw error
         }
     }
-
-
-
     async UpdateTeam(team: team, ip_owner: string): Promise<{ status: boolean; message: string; }> {
         try {
             const resp = await TeamSchema.findOneAndUpdate({ ip_owner: ip_owner, _id: team._id }, { $set: team })

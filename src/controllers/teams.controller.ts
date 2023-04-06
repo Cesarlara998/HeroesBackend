@@ -53,7 +53,6 @@ export default class TeamController {
             
             return response.send({status:true,data:teamDB});
         } catch (error) {
-            console.log(error);
             
             return response.status(500).send('Error');
 

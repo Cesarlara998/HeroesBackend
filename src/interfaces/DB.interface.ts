@@ -3,7 +3,8 @@ import team from "./team.interface";
 
 interface HeroeDB {
     CreateOrUpdate(Heroe: Character) : Promise<any>;
-    CollectionCreate(Heroe: Character[],total:number,contador:number,action)
+    CollectionCreate(Heroe: Character[],total:number,contador:number,action);
+    FindById(Id:string): Promise<any>;
 }
 
 interface TeamDB {
@@ -15,5 +16,10 @@ interface TeamDB {
     deleteHero(teamId:string,ip_owner:string,ChaaracterId:string): Promise<{status:boolean,message:string}>;
 }
 
+interface FavoritesDB {
+    GetFavorite(ip_owner:String): Promise<any[]>;
+    InsertFavorite(HeroeId:string,ip_owner: string): Promise<{status:boolean,message:string}>;
+    DeleteFavorite(idHeroe,ip_owner): Promise<{status:boolean,message:string}>;
+}
 
-export {HeroeDB,TeamDB}
+export {HeroeDB,TeamDB,FavoritesDB}
