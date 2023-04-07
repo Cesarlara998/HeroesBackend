@@ -30,6 +30,7 @@ export default class FavoritesController {
             const favorite = await this.favoritesDataSource.InsertFavorite(heroe._id,request.socket.remoteAddress);
             return response.send(favorite);
         } catch (error) {
+            
             if (error === "Heroe ya existente como favorito") return response.status(500).send('Heroe ya existente como favorito');
             if (error.response?.data?.code === "ResourceNotFound") return response.status(500).send('Heroe no existente');
             
@@ -42,6 +43,8 @@ export default class FavoritesController {
             return response.send( await this.favoritesDataSource.GetFavorite(request.socket.remoteAddress));
 
         } catch (error) {
+            console.log(error);
+            
             return response.status(500).send('Error');
 
         }

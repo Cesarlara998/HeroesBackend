@@ -8,6 +8,7 @@ export default class FavoritesDataSource implements FavoritesDB{
     async GetFavorite(ip_owner: String): Promise<any[]> {
         try {
             const data =  await FavoriteSchema.findOne({ ip_owner: ip_owner }).populate("characters");
+            if (!data) return []
             return data.characters
         } catch (error) {
             throw error
@@ -24,7 +25,6 @@ export default class FavoritesDataSource implements FavoritesDB{
                 { $addToSet: { characters: HeroeId } },
                 { upsert: true }
               )
-              if (fav.modifiedCount === 0) return {status: false,message: 'Heroe ya existente como favorito'};
             FavoriteIndex.save()
             return {status: true,message: 'Favorito agregado'}
         } catch (error) {  

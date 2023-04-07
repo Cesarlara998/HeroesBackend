@@ -5,7 +5,7 @@ const Heroe: Schema = new Schema({
         extension: {type: String},
         path: {type: String},
     },
-    descripcion: {type: String,default:""},
+    description: {type: String,default:""},
     id:{type: Number},
     modified: {type: String},
     name:{type: String},
