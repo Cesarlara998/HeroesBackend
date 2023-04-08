@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+  app:
+    depends_on:
+      - mongodb
+    build: ./
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - 3000:$PORT
+    environment:
+      - PUBLIC_KEY=$PUBLIC_KEY
+      - PRIVATE_KEY=$PRIVATE_KEY
+      - MONGO_URI=$MONGO_URI
+      - URL_MARVEL=$URL_MARVEL
+    stdin_open: true
+    tty: true
+
+volumes:
+  db:

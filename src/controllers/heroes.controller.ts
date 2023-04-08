@@ -48,6 +48,8 @@ export default class HeroesController {
 
             return response.json(paginator)
         } catch (error) {
+            console.log(error);
+            
             if (request.query.id && error.response?.data?.code === 404) {
                 return response.status(500).send("Heroe no encontrado");
 
